@@ -26,6 +26,7 @@ func SetStaticWebsiteConfig() error {
 	wxml.ErrorDocument.Key = config.NotFoundPage
 	wxml.IndexDocument.SupportSubDir = &bEnable
 	wxml.IndexDocument.Type = &supportSubDirType
+	wxml.RoutingRules = append(wxml.RoutingRules, oss.RoutingRule{Condition: oss.Condition{HTTPErrorCodeReturnedEquals: config.ErrorDocumentHTTPCode}})
 
 	err = config.Client.SetBucketWebsiteDetail(config.BucketName, wxml)
 	if err != nil {

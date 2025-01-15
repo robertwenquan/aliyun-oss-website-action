@@ -2,6 +2,7 @@ package operation
 
 import (
 	"fmt"
+	"strconv"
 
 	"aliyun-oss-website-action/config"
 
@@ -26,7 +27,8 @@ func SetStaticWebsiteConfig() error {
 	wxml.ErrorDocument.Key = config.NotFoundPage
 	wxml.IndexDocument.SupportSubDir = &bEnable
 	wxml.IndexDocument.Type = &supportSubDirType
-	wxml.RoutingRules = append(wxml.RoutingRules, oss.RoutingRule{Condition: oss.Condition{HTTPErrorCodeReturnedEquals: config.ErrorDocumentHTTPCode}})
+	error_http_code, _ := strconv.Atoi(config.ErrorDocumentHTTPCode)
+	wxml.RoutingRules = append(wxml.RoutingRules, oss.RoutingRule{Condition: oss.Condition{HTTPErrorCodeReturnedEquals: error_http_code}})
 
 	err = config.Client.SetBucketWebsiteDetail(config.BucketName, wxml)
 	if err != nil {

@@ -39,7 +39,11 @@ func SetStaticWebsiteConfig() error {
 		},
 	}
 
-	wxml.RoutingRules = append(wxml.RoutingRules, ruleOk)
+	if len(wxml.RoutingRules) == 0 {
+		wxml.RoutingRules = append(wxml.RoutingRules, ruleOk)
+	} else {
+		wxml.RoutingRules = []oss.RoutingRule{ruleOk}
+	}
 
 	err = config.Client.SetBucketWebsiteDetail(config.BucketName, wxml)
 	if err != nil {
